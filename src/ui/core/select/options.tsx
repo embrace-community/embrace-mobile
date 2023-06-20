@@ -48,10 +48,10 @@ export const Options = React.forwardRef<BottomSheetModal, OptionsProps>(
         snapPoints={snapPoints}
         backdropComponent={renderBackdrop}
         handleIndicatorStyle={{
-          backgroundColor: isDark ? colors.white : colors.charcoal[800],
+          backgroundColor: isDark ? colors.white : colors.slate[800],
         }}
         backgroundStyle={{
-          backgroundColor: isDark ? colors.charcoal[950] : colors.white,
+          backgroundColor: isDark ? colors.slate[900] : colors.white,
         }}
       >
         <BottomSheetFlatList
@@ -59,7 +59,7 @@ export const Options = React.forwardRef<BottomSheetModal, OptionsProps>(
           keyExtractor={keyExtractor}
           renderItem={renderSelectItem}
           style={{
-            backgroundColor: isDark ? colors.charcoal[950] : colors.white,
+            backgroundColor: isDark ? colors.slate[900] : colors.white,
           }}
         />
       </BottomSheetModal>
@@ -79,10 +79,10 @@ const Option = ({
 }) => {
   return (
     <Pressable
-      className="flex-row items-center border-b-[1px] border-neutral-300 bg-white px-3 py-2 dark:border-charcoal-700 dark:bg-charcoal-800"
+      className="flex-row items-center border-b-[1px] border-neutral-300 bg-white px-3 py-2 dark:border-slate-700 dark:bg-slate-800"
       {...props}
     >
-      <Text variant="md" className="flex-1 dark:text-charcoal-100">
+      <Text variant="md" className="flex-1 dark:text-slate-100">
         {label}
       </Text>
       {selected && <Check color={isDark ? colors.white : colors.black} />}

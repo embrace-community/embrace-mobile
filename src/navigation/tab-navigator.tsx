@@ -65,7 +65,7 @@ export const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarInactiveTintColor:
-          colorScheme === 'dark' ? colors.charcoal[400] : colors.neutral[400],
+          colorScheme === 'dark' ? colors.slate[400] : colors.neutral[400],
         // eslint-disable-next-line react/no-unstable-nested-components
         tabBarIcon: ({ color }) => <BarIcon name={route.name} color={color} />,
       })}

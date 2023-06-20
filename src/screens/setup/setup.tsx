@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Wallet } from '@/core/ethers';
 import { useIsSetup } from '@/core/hooks';
-import { Button, SafeAreaView } from '@/ui';
+import { Button, SafeAreaView, Text } from '@/ui';
 
 export const Setup = () => {
   const [_, setIsSetup] = useIsSetup();
@@ -20,8 +20,11 @@ export const Setup = () => {
 
   return (
     <SafeAreaView className="flex h-full flex-1 items-center justify-center">
+      <Text variant="h1" className="mb-4">
+        Get Started
+      </Text>
       <Button
-        label="CreateWallet"
+        label="Create Account"
         onPress={() => {
           createWallet();
         }}

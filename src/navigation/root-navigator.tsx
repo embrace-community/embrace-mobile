@@ -10,7 +10,6 @@ const Stack = createNativeStackNavigator();
 
 export const Root = () => {
   const [isSetup] = useIsSetup();
-  // const isSetup = false;
 
   return (
     <Stack.Navigator

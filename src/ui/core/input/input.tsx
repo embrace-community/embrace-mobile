@@ -33,11 +33,11 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
       ? 'border-white'
       : 'border-neutral-600'
     : isDark
-    ? 'border-charcoal-700'
+    ? 'border-slate-700'
     : 'border-neutral-400';
 
   const bgColor = isDark
-    ? 'bg-charcoal-800'
+    ? 'bg-slate-800'
     : error
     ? 'bg-danger-50'
     : 'bg-neutral-200';
@@ -48,11 +48,7 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
         <Text
           variant="md"
           className={
-            error
-              ? 'text-danger-600'
-              : isDark
-              ? 'text-charcoal-100'
-              : 'text-black'
+            error ? 'text-danger-600' : isDark ? 'text-slate-100' : 'text-black'
           }
         >
           {label}
@@ -62,7 +58,7 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
         testID="STextInput"
         ref={ref}
         placeholderTextColor={colors.neutral[400]}
-        className={`mt-0 border-[1px] px-2 py-4  ${borderColor} rounded-md ${bgColor} text-[16px] ${textDirection} dark:text-charcoal-100`}
+        className={`mt-0 border-[1px] px-2 py-4  ${borderColor} rounded-md ${bgColor} text-[16px] ${textDirection} dark:text-slate-100`}
         onBlur={onBlur}
         onFocus={onFocus}
         {...inputProps}

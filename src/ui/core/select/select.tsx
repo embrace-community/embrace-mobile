@@ -85,11 +85,11 @@ const useColors = (error: boolean) => {
   const borderColor = error
     ? 'border-danger-600'
     : isDark
-    ? 'border-charcoal-700'
+    ? 'border-slate-700'
     : 'border-neutral-400';
 
   const bgColor = isDark
-    ? 'bg-charcoal-800'
+    ? 'bg-slate-800'
     : error
     ? 'bg-danger-50'
     : 'bg-neutral-200';
@@ -97,13 +97,13 @@ const useColors = (error: boolean) => {
   const labelColor = error
     ? 'text-danger-600'
     : isDark
-    ? 'text-charcoal-100'
+    ? 'text-slate-100'
     : 'text-black';
 
   const valueColor = error
     ? 'text-danger-600'
     : isDark
-    ? 'text-charcoal-100'
+    ? 'text-slate-100'
     : 'text-neutral-600';
 
   return { borderColor, bgColor, labelColor, valueColor } as const;
