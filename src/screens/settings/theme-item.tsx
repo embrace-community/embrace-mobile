@@ -12,7 +12,6 @@ export const ThemeItem = () => {
   const { selectedTheme, setSelectedTheme } = useSelectedTheme();
   const optionsRef = React.useRef<BottomSheetModal>(null);
   const open = React.useCallback(() => {
-    console.log(optionsRef, 'optionsRef');
     optionsRef.current?.present();
   }, []);
 
