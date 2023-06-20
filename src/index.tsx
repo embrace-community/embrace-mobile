@@ -6,7 +6,6 @@ import * as SplashScreen from 'expo-splash-screen';
 import React from 'react';
 import FlashMessage from 'react-native-flash-message';
 
-import { APIProvider } from '@/api';
 import { hydrateAuth, loadSelectedTheme } from '@/core';
 import { RootNavigator } from '@/navigation';
 
@@ -17,10 +16,8 @@ SplashScreen.preventAutoHideAsync();
 const App = () => {
   return (
     <BottomSheetModalProvider>
-      <APIProvider>
-        <RootNavigator />
-        <FlashMessage position="top" />
-      </APIProvider>
+      <RootNavigator />
+      <FlashMessage position="top" />
     </BottomSheetModalProvider>
   );
 };

@@ -79,7 +79,7 @@ const Option = ({
 }) => {
   return (
     <Pressable
-      className="flex-row items-center border-b-[1px] border-neutral-300 bg-white py-2 px-3 dark:border-charcoal-700 dark:bg-charcoal-800"
+      className="flex-row items-center border-b-[1px] border-neutral-300 bg-white px-3 py-2 dark:border-charcoal-700 dark:bg-charcoal-800"
       {...props}
     >
       <Text variant="md" className="flex-1 dark:text-charcoal-100">

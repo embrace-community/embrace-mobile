@@ -1,14 +1,16 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
+import { useIsSetup } from '@/core';
+
 import { Setup } from '../screens';
 import { NavigationContainer } from './navigation-container';
 import { TabNavigator } from './tab-navigator';
 const Stack = createNativeStackNavigator();
 
 export const Root = () => {
-  // const [isSetup] = useIsSetup();
-  const isSetup = false;
+  const [isSetup] = useIsSetup();
+  // const isSetup = false;
 
   return (
     <Stack.Navigator

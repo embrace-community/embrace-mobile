@@ -11,7 +11,15 @@ import { Item } from './item';
 export const ThemeItem = () => {
   const { selectedTheme, setSelectedTheme } = useSelectedTheme();
   const optionsRef = React.useRef<BottomSheetModal>(null);
-  const open = React.useCallback(() => optionsRef.current?.present(), []);
+  // console.log(optionsRef, 'optionsRef');
+  // const open = React.useCallback(() => optionsRef.current?.present(), []);
+  const open = React.useCallback(() => {
+    console.log(optionsRef, 'optionsRef');
+    // optionsRef.current?.present();
+    if (optionsRef.current) {
+      optionsRef.current.present();
+    }
+  }, [optionsRef]);
   const onSelect = React.useCallback(
     (option: Option) => {
       setSelectedTheme(option.value as ColorSchemeType);
