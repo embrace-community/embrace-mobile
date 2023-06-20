@@ -2,7 +2,6 @@ import { Env } from '@env';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
 
-import { useAuth } from '@/core';
 import { translate } from '@/core';
 import { ScrollView, Text, View } from '@/ui';
 import { Github, Rate, Share, Support, Website } from '@/ui/icons';
@@ -14,7 +13,6 @@ import { LanguageItem } from './language-item';
 import { ThemeItem } from './theme-item';
 
 export const Settings = () => {
-  const signOut = useAuth.use.signOut();
   const { colorScheme } = useColorScheme();
   const iconColor =
     colorScheme === 'dark' ? colors.neutral[400] : colors.neutral[500];
@@ -24,7 +22,7 @@ export const Settings = () => {
         <Text variant="lg" className="font-bold">
           {translate('settings.title')}
         </Text>
-        <ItemsContainer title="settings.generale">
+        <ItemsContainer title="settings.general">
           <LanguageItem />
           <ThemeItem />
         </ItemsContainer>
@@ -66,12 +64,6 @@ export const Settings = () => {
             onPress={() => {}}
           />
         </ItemsContainer>
-
-        <View className="my-8">
-          <ItemsContainer>
-            <Item text="settings.logout" onPress={signOut} />
-          </ItemsContainer>
-        </View>
       </View>
     </ScrollView>
   );

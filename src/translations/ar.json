@@ -1,13 +1,13 @@
 {
   "onboarding": {
-    "message": "مرحبا بكم في موقع تطبيق obytes"
+    "message": "مرحبا بكم في موقع تطبيق"
   },
   "settings": {
     "about": "حول التطبيق ",
     "app_name": "اسم التطبيق",
     "arabic": "عربي",
     "english": "إنجليزي",
-    "generale": "عام",
+    "general": "عام",
     "github": "جيثب",
     "language": "لغة",
     "links": "الروابط",

@@ -1,5 +1,13 @@
 import { MMKV } from 'react-native-mmkv';
 
+type StorageKeys = {
+  IS_SETUP: string;
+};
+
+export const storageKeys: StorageKeys = {
+  IS_SETUP: 'IS_SETUP',
+};
+
 export const storage = new MMKV();
 
 export function getItem<T>(key: string): T {

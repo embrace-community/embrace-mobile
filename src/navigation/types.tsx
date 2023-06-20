@@ -1,6 +1,6 @@
 import type { RouteProp as NRouteProp } from '@react-navigation/native';
 
-import type { AuthStackParamList } from './auth-navigator';
+import type { AuthStackParamList } from '@/navigation/auth-navigator';
 
 export type RootStackParamList = AuthStackParamList; //  & FooStackParamList & BarStackParamList
 // very important to type check useNavigation hook

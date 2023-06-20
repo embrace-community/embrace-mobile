@@ -1,5 +1,5 @@
-import { ethers, hexlify } from 'ethers';
-import crypto from 'react-native-quick-crypto';
+import * as ethers from 'ethers';
+import { pbkdf2Sync } from 'react-native-quick-crypto';
 
 ethers.pbkdf2.register(
   (
@@ -10,8 +10,8 @@ ethers.pbkdf2.register(
     algo: 'sha256' | 'sha512'
     // eslint-disable-next-line max-params
   ) => {
-    return hexlify(crypto.pbkdf2Sync(password, salt, iterations, keylen, algo));
+    return ethers.hexlify(pbkdf2Sync(password, salt, iterations, keylen, algo));
   }
 );
 
-export { ethers };
+export * from 'ethers';

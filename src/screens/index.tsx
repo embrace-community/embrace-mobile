@@ -1,4 +1,3 @@
-export * from './login';
-export * from './onboarding';
 export * from './settings';
+export * from './setup';
 export * from './style';
