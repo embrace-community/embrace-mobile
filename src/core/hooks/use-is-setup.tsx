@@ -1,9 +1,12 @@
 import { useMMKVBoolean } from 'react-native-mmkv';
 
-import { storage, storageKeys } from '../storage';
+import { defaultStorage, defaultStorageKeys } from '../storage';
 
 export const useIsSetup = () => {
-  const [isSetup, setIsSetup] = useMMKVBoolean(storageKeys.IS_SETUP, storage);
+  const [isSetup, setIsSetup] = useMMKVBoolean(
+    defaultStorageKeys.IS_SETUP,
+    defaultStorage
+  );
   if (isSetup === undefined) {
     return [false, setIsSetup] as const;
   }

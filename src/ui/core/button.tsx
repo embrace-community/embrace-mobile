@@ -23,19 +23,19 @@ export const buttonVariants: BVariant = {
     indicator: 'text-white h-[30px]',
   },
   primary: {
-    container: 'bg-black',
+    container: 'bg-primary-700',
     label: '',
     indicator: 'text-white',
   },
   secondary: {
-    container: 'bg-primary-600',
+    container: 'bg-slate-500',
     label: 'text-secondary-600',
     indicator: 'text-white',
   },
   outline: {
-    container: 'border border-neutral-400',
-    label: 'text-black dark:text-slate-100',
-    indicator: 'text-black',
+    container: 'border border-slate-400',
+    label: 'text-slate-600 dark:text-slate-100',
+    indicator: 'text-slate-600',
   },
 };
 
