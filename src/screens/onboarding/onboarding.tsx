@@ -1,11 +1,23 @@
 import React from 'react';
 
+import { ethers } from '@/core/ethers';
 import { useIsFirstTime } from '@/core/hooks';
 import { Button, SafeAreaView, Text, View } from '@/ui';
 
 import { Cover } from './cover';
+
 export const Onboarding = () => {
   const [_, setIsFirstTime] = useIsFirstTime();
+
+  const createWallet = async () => {
+    const start = performance.now();
+    const wallet = ethers.Wallet.createRandom();
+    const end = performance.now();
+
+    console.log(`Creating a Wallet took ${end - start} ms.`);
+    console.log('wallet', wallet.privateKey, wallet.address, wallet.mnemonic);
+  };
+
   return (
     <View className="flex h-full items-center  justify-center">
       <View className="w-full flex-1">
@@ -37,6 +49,12 @@ export const Onboarding = () => {
           label="Let's Get Started "
           onPress={() => {
             setIsFirstTime(false);
+          }}
+        />
+        <Button
+          label="CreateWallet"
+          onPress={() => {
+            createWallet();
           }}
         />
       </SafeAreaView>

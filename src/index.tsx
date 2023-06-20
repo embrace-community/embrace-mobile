@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+import '@/core/ethers-setup';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import * as SplashScreen from 'expo-splash-screen';
