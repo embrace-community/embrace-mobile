@@ -60,7 +60,7 @@ const BarIcon = ({ color, name, ...reset }: BarIconType) => {
   return <Icon color={color} {...reset} />;
 };
 
-export const TabNavigator = () => {
+export const AccountNavigator = () => {
   const { colorScheme } = useColorScheme();
   return (
     <Tab.Navigator

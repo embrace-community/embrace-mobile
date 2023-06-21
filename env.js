@@ -33,7 +33,7 @@ require('dotenv').config({
 
 const BUNDLE_ID = 'com.embrace.mobile'; // ios bundle id
 const PACKAGE = 'com.embrace.mobile'; // android package name
-const NAME = 'embrace.mobile'; // app name
+const NAME = 'Embrace'; // app name
 
 /**
  * We declare a function withEnvSuffix that will add a suffix to the variable name based on the APP_ENV

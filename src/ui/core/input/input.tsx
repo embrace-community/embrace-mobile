@@ -11,24 +11,28 @@ import { Text } from '../text';
 import { View } from '../view';
 
 const STextInput = styled(NTextInput);
+import classNames from 'classnames';
 
 export interface NInputProps extends TextInputProps {
   label?: string;
   disabled?: boolean;
   error?: string;
+  className?: string;
 }
 
 export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
-  const { label, error, ...inputProps } = props;
+  const { label, error, className, ...inputProps } = props;
+  const includedClassNames = className ?? '';
+
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
-  const [isFocussed, setIsFocussed] = React.useState(false);
-  const onBlur = React.useCallback(() => setIsFocussed(false), []);
-  const onFocus = React.useCallback(() => setIsFocussed(true), []);
+  const [isFocused, setIsFocused] = React.useState(false);
+  const onBlur = React.useCallback(() => setIsFocused(false), []);
+  const onFocus = React.useCallback(() => setIsFocused(true), []);
 
   const borderColor = error
     ? 'border-danger-600'
-    : isFocussed
+    : isFocused
     ? isDark
       ? 'border-white'
       : 'border-neutral-600'
@@ -58,7 +62,14 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
         testID="STextInput"
         ref={ref}
         placeholderTextColor={colors.neutral[400]}
-        className={`mt-0 border-[1px] px-2 py-4  ${borderColor} rounded-md ${bgColor} text-[16px] ${textDirection} dark:text-slate-100`}
+        className={classNames({
+          'mt-0 border-[1px] px-2 py-4 rounded-md text-[16px] dark:text-slate-100':
+            true,
+          [borderColor]: true,
+          [bgColor]: true,
+          [textDirection]: true,
+          [includedClassNames]: true,
+        })}
         onBlur={onBlur}
         onFocus={onFocus}
         {...inputProps}

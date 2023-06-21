@@ -4,9 +4,10 @@ import React, { useEffect } from 'react';
 
 import { useIsSetup } from '@/core/storage/hooks';
 
-import { Setup } from '../screens';
+import { AccountNavigator } from './account-navigator';
 import { NavigationContainer } from './navigation-container';
-import { TabNavigator } from './tab-navigator';
+import { SetupNavigator } from './setup-navigator';
+import { UserNavigator } from './user-navigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,10 +31,11 @@ export const Root = () => {
       }}
     >
       {!isSetup ? (
-        <Stack.Screen name="Setup" component={Setup} />
+        <Stack.Screen name="Setup" component={SetupNavigator} />
       ) : (
         <Stack.Group>
-          <Stack.Screen name="App" component={TabNavigator} />
+          <Stack.Screen name="User" component={UserNavigator} />
+          <Stack.Screen name="Account" component={AccountNavigator} />
         </Stack.Group>
       )}
     </Stack.Navigator>

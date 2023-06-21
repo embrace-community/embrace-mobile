@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import type { TouchableOpacityProps } from 'react-native';
 
@@ -17,13 +18,12 @@ type BVariant = {
 
 export const buttonVariants: BVariant = {
   defaults: {
-    container:
-      'flex-row items-center justify-center rounded-full px-12 py-3 my-2',
-    label: 'text-[16px] font-medium text-white',
+    container: 'flex-row items-center justify-center rounded-md h-16 p-3',
+    label: 'text-[16px] text-white',
     indicator: 'text-white h-[30px]',
   },
   primary: {
-    container: 'bg-primary-700',
+    container: 'bg-primary-600',
     label: '',
     indicator: 'text-white',
   },
@@ -50,16 +50,18 @@ export const Button = ({
   loading = false,
   variant = 'primary',
   disabled = false,
+  className = '',
   ...props
 }: Props) => {
   return (
     <TouchableOpacity
       disabled={disabled || loading}
-      className={`
-    ${buttonVariants.defaults.container}
-     ${buttonVariants[variant].container}
-     ${disabled ? 'opacity-50' : ''}
-    `}
+      className={classNames({
+        [buttonVariants.defaults.container]: true,
+        [buttonVariants[variant].container]: true,
+        'opacity-50': disabled,
+        [className]: true,
+      })}
       {...props}
     >
       {loading ? (
