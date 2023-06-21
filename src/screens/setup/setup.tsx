@@ -18,6 +18,8 @@ export const Setup = () => {
     setIsSetup(true);
   };
 
+  console.log('Setup rendered');
+
   return (
     <SafeAreaView className="flex h-full flex-1 items-center justify-center">
       <Text variant="h1" className="mb-4">
