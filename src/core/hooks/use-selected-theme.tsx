@@ -15,14 +15,14 @@ export type ColorSchemeType = 'light' | 'dark' | 'system';
  */
 export const useSelectedTheme = () => {
   const { colorScheme: _color, setColorScheme } = useColorScheme();
-  const [theme, _setTheme] = useMMKVString(SELECTED_THEME, defaultStorage);
+  const [theme, setTheme] = useMMKVString(SELECTED_THEME, defaultStorage);
 
   const setSelectedTheme = React.useCallback(
     (t: ColorSchemeType) => {
       setColorScheme(t);
-      _setTheme(t);
+      setTheme(t);
     },
-    [setColorScheme, _setTheme]
+    [setColorScheme, setTheme]
   );
 
   const selectedTheme = (theme ?? 'system') as ColorSchemeType;
