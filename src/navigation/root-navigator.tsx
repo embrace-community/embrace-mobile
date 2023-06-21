@@ -1,15 +1,25 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+import React, { useEffect } from 'react';
 
-import { useIsSetup } from '@/core';
+import { useIsSetup } from '@/core/storage/hooks';
 
 import { Setup } from '../screens';
 import { NavigationContainer } from './navigation-container';
 import { TabNavigator } from './tab-navigator';
+
 const Stack = createNativeStackNavigator();
 
 export const Root = () => {
   const [isSetup] = useIsSetup();
+
+  useEffect(() => {
+    async function hideSplash() {
+      await SplashScreen.hideAsync();
+    }
+
+    hideSplash();
+  }, []);
 
   return (
     <Stack.Navigator

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { useIsSetup } from '@/core';
 import { Wallet } from '@/core/ethers';
+import { useIsSetup } from '@/core/storage/hooks';
 import { Button, SafeAreaView, Text } from '@/ui';
 
 export const Setup = () => {

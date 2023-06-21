@@ -13,9 +13,9 @@ import type { RecursiveKeyOf } from './types';
 type DefaultLocale = typeof resources.en.translation;
 export type TxKeyPath = RecursiveKeyOf<DefaultLocale>;
 
-export const LOCAL = 'local';
+export const LOCALE = 'locale';
 
-export const getLanguage = () => defaultStorage.getString(LOCAL); // 'Marc' getItem<Language | undefined>(LOCAL);
+export const getLanguage = () => defaultStorage.getString(LOCALE);
 
 export const translate = memoize(
   (key: TxKeyPath, options = undefined) =>
@@ -36,7 +36,7 @@ export const changeLanguage = (lang: Language) => {
 };
 
 export const useSelectedLanguage = () => {
-  const [language, setLang] = useMMKVString(LOCAL);
+  const [language, setLang] = useMMKVString(LOCALE);
 
   const setLanguage = useCallback(
     (lang: Language) => {
