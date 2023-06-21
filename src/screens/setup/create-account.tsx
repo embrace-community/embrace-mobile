@@ -1,16 +1,18 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable unused-imports/no-unused-vars  */
+import { Env } from '@env';
 import { AntDesign } from '@expo/vector-icons';
 import type { NativeStackNavigationHelpers } from '@react-navigation/native-stack/lib/typescript/src/types';
 import classNames from 'classnames';
-// import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
-// import * as ImagePicker from 'expo-image-picker';
-import { useState } from 'react';
+import * as FileSystem from 'expo-file-system';
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
+import * as ImagePicker from 'expo-image-picker';
+import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
+import { Alert } from 'react-native';
 
 import {
   Button,
-  // Button,
   Image,
   Input,
   SafeAreaView,
@@ -25,167 +27,172 @@ type Props = {
 export const CreateAccountScreen = ({ navigation }: Props) => {
   const [handle, setHandle] = useState('martinopensky');
   const [displayName, setDisplayName] = useState('Martin');
-  const [image, setImage] = useState(null);
-  const [cids, setCids] = useState(null);
+  const [image, setImage] = useState<string | null>(null);
+  // TODO: Correct typing
+  const [cids, setCids] = useState<any>(null);
 
   const [loading, setLoading] = useState(false);
 
-  // type CID = {
-  //   metadataUri: string;
-  //   avatarUri?: string;
-  // };
+  type CID = {
+    metadataUri: string;
+    avatarUri?: string;
+  };
 
-  // // Update local profiles once CIDs have been set
-  // useEffect(() => {
-  //   async function updateLocalProfile() {
-  //     // if (!rxDb || !cids || !handle) return;
-  //     if (!cids || !handle) return;
+  // Update local profiles once CIDs have been set
+  useEffect(() => {
+    async function updateLocalProfile() {
+      // if (!rxDb || !cids || !handle) return;
+      if (!cids || !handle) return;
 
-  //     console.log('SETTING PROFILE CIDS', cids);
+      console.log('SETTING PROFILE CIDS', cids);
 
-  //     const data: CID = {
-  //       metadataUri: `ipfs://${cids.metadataCid}`,
-  //     };
+      const data: CID = {
+        metadataUri: `ipfs://${cids.metadataCid}`,
+      };
 
-  //     if (cids.avatarCid) {
-  //       data.avatarUri = `ipfs://${cids.avatarCid}`;
-  //     }
+      if (cids.avatarCid) {
+        data.avatarUri = `ipfs://${cids.avatarCid}`;
+      }
 
-  //     // await rxDb[LOCAL_DB_COLLECTION_MY_PROFILES].findOne(handle).update({
-  //     //   $set: data,
-  //     // });
-  //   }
+      console.log('data', data);
 
-  //   updateLocalProfile();
-  // }, [cids, handle]);
+      // await rxDb[LOCAL_DB_COLLECTION_MY_PROFILES].findOne(handle).update({
+      //   $set: data,
+      // });
+    }
 
-  // const initAccount = async () => {
-  //   // Validate form - handle and display name
-  //   if (!handle || !displayName) {
-  //     return Alert.alert('Please enter a valid handle and display name');
-  //   }
+    updateLocalProfile();
+  }, [cids, handle]);
 
-  //   setLoading(true);
+  const initAccount = async () => {
+    // Validate form - handle and display name
+    if (!handle || !displayName) {
+      return Alert.alert('Please enter a valid handle and display name');
+    }
 
-  //   // Create wallet
-  //   const activeAccount = await createWallet();
+    console.log('initAccount');
 
-  //   // Save profile to local DB - will be synced to Polybase
-  //   const profile = createProfile(activeAccount);
+    setLoading(true);
 
-  //   // Upload metadata & avatar to IPFS
-  //   // Once CIDs have been set then they will be saved to Profile collection
-  //   uploadMetadata();
+    // Create wallet
+    // const activeAccount = await createWallet();
 
-  //   setLoading(false);
+    // Save profile to local DB - will be synced to Polybase
+    // const profile = createProfile(activeAccount);
 
-  //   console.log('profile', profile);
+    // Upload metadata & avatar to IPFS
+    // Once CIDs have been set then they will be saved to Profile collection
+    await uploadMetadata();
 
-  //   navigation.navigate('Main', {
-  //     screen: 'Account',
-  //   });
-  // };
+    setLoading(false);
 
-  // const pickImage = useCallback(async () => {
-  //   // No permissions request is necessary for launching the image library
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1,
-  //   });
+    // console.log('profile', profile);
 
-  //   if (!result.canceled) {
-  //     try {
-  //       const selectedImage = result.assets[0];
+    // navigation.navigate('Main', {
+    //   screen: 'Account',
+    // });
+  };
 
-  //       const fileInfo = await FileSystem.getInfoAsync(selectedImage.uri);
+  const pickImage = useCallback(async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-  //       //@ts-ignore - types are incorrect for fileInfo
-  //       const compress = compressSizer(fileInfo.size);
+    if (!result.canceled) {
+      try {
+        const selectedImage = result.assets[0];
 
-  //       console.log('fileInfo', fileInfo);
-  //       console.log('compress', compress);
+        const fileInfo = await FileSystem.getInfoAsync(selectedImage.uri);
 
-  //       const compressedImage = await manipulateAsync(
-  //         result.assets[0].uri,
-  //         [],
-  //         {
-  //           compress,
-  //           format: SaveFormat.JPEG,
-  //         }
-  //       );
-  //       setImage(compressedImage.uri);
+        //@ts-ignore - types are incorrect for fileInfo
+        const compress = compressSizer(fileInfo.size);
 
-  //       console.log('SELECTED IMAGE', result.assets[0].uri);
-  //       console.log('COMPRESSED IMAGE', compressedImage.uri);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // }, []);
+        console.log('fileInfo', fileInfo);
+        console.log('compress', compress);
 
-  // const compressSizer = (size: number) => {
-  //   const MB = size / Math.pow(1024, 2);
-  //   if (Math.round(MB) === 0) return 1;
-  //   if (Math.round(MB) === 1) return 0.8;
-  //   if (Math.round(MB) < 5) return 0.1;
-  //   if (Math.round(MB) >= 5) return 0;
-  // };
+        const compressedImage = await manipulateAsync(
+          result.assets[0].uri,
+          [],
+          {
+            compress,
+            format: SaveFormat.JPEG,
+          }
+        );
+        setImage(compressedImage.uri);
 
-  // // Local validation of handle
-  // const validateHandle = (text: string) => {
-  //   const handleRegex = /^[a-zA-Z0-9_]{1,15}$/;
-  //   if (handleRegex.test(text)) {
-  //     console.log('setHandle', text);
-  //     setHandle(text.toLowerCase());
-  //   }
-  // };
+        console.log('SELECTED IMAGE', result.assets[0].uri);
+        console.log('COMPRESSED IMAGE', compressedImage.uri);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, []);
 
-  // // Upload profile metadata to IPFS
-  // const uploadMetadata = async () => {
-  //   console.log('uploadMetadata');
+  const compressSizer = (size: number) => {
+    const MB = size / Math.pow(1024, 2);
+    if (Math.round(MB) === 0) return 1;
+    if (Math.round(MB) === 1) return 0.8;
+    if (Math.round(MB) < 5) return 0.1;
+    if (Math.round(MB) >= 5) return 0;
+  };
 
-  //   try {
-  //     const data = new FormData();
+  // Local validation of handle
+  const validateHandle = (text: string) => {
+    const handleRegex = /^[a-zA-Z0-9_]{1,15}$/;
+    if (handleRegex.test(text)) {
+      console.log('setHandle', text);
+      setHandle(text.toLowerCase());
+    }
+  };
 
-  //     if (image) {
-  //       data.append('image', {
-  //         uri: image,
-  //         type: 'image/jpg',
-  //         name: 'image.jpg',
-  //       } as any);
-  //     }
+  // Upload profile metadata to IPFS
+  const uploadMetadata = async () => {
+    console.log('uploadMetadata');
 
-  //     data.append('name', displayName);
-  //     data.append('handle', handle);
+    try {
+      const data = new FormData();
 
-  //     console.log('UPLOADING PROFILE', data, API_ENDPOINT + 'profile');
+      if (image) {
+        data.append('image', {
+          uri: image,
+          type: 'image/jpg',
+          name: 'image.jpg',
+        } as any);
+      }
 
-  //     let res = await fetch(API_ENDPOINT + 'profile', {
-  //       method: 'POST',
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'multipart/form-data',
-  //       },
-  //       body: data,
-  //     });
+      data.append('name', displayName);
+      data.append('handle', handle);
 
-  //     let result = await res.json();
+      console.log('UPLOADING PROFILE', data, Env.API_ENDPOINT_IPFS + 'profile');
 
-  //     if (res.status !== 200) {
-  //       console.log('Problem uploading metadata', result, res.status);
-  //       return false;
-  //     }
+      let res = await fetch(Env.API_ENDPOINT_IPFS + 'profile', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+        body: data,
+      });
 
-  //     setCids(result);
-  //     return true;
-  //   } catch (error) {
-  //     // Error retrieving data
-  //     // Alert.alert('Error', error.message);
-  //     console.log('error upload', error);
-  //   }
-  // };
+      let result = await res.json();
+
+      if (res.status !== 200) {
+        console.log('Problem uploading metadata', result, res.status);
+        return false;
+      }
+
+      setCids(result);
+      return true;
+    } catch (error) {
+      // Error retrieving data
+      // Alert.alert('Error', error.message);
+      console.log('error upload', error);
+    }
+  };
 
   // // Creating profile in local DB
   // const createProfile = async (activeAccount: ActiveAccount) => {
@@ -210,7 +217,7 @@ export const CreateAccountScreen = ({ navigation }: Props) => {
     <SafeAreaView className="flex-1">
       <View className="flex-1 items-center bg-white">
         <View className="absolute left-0 top-0 z-10 h-48 w-full items-center bg-violet-200">
-          <TouchableOpacity className="mt-24 flex" onPress={() => {}}>
+          <TouchableOpacity className="mt-24 flex" onPress={pickImage}>
             <View
               className={classNames({
                 'h-56 w-56 items-center justify-center rounded-full bg-slate-100':
@@ -258,7 +265,6 @@ export const CreateAccountScreen = ({ navigation }: Props) => {
             className="flex-1"
             label="Back"
             variant="outline"
-            loading={loading}
             onPress={() => navigation.navigate('GettingStarted')}
           />
 
@@ -267,7 +273,7 @@ export const CreateAccountScreen = ({ navigation }: Props) => {
             variant="primary"
             label="Create Account"
             loading={loading}
-            // onPress={() => initAccount}
+            onPress={initAccount}
           />
         </View>
       </View>
