@@ -1,3 +1,4 @@
+import { Entypo } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import type { RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -7,7 +8,7 @@ import * as React from 'react';
 import type { SvgProps } from 'react-native-svg';
 
 import { Settings, Style } from '@/screens';
-import { colors, Settings as SettingsIcon, Style as StyleIcon } from '@/ui';
+import { colors } from '@/ui';
 
 type TabParamList = {
   Style: undefined;
@@ -27,8 +28,8 @@ type TabIconsType = {
 const Tab = createBottomTabNavigator<TabParamList>();
 
 const tabsIcons: TabIconsType = {
-  Style: (props: SvgProps) => <StyleIcon {...props} />,
-  Settings: (props: SvgProps) => <SettingsIcon {...props} />,
+  Style: (props: SvgProps) => <Entypo name="palette" size={24} {...props} />,
+  Settings: (props: SvgProps) => <Entypo name="cog" size={24} {...props} />,
 };
 
 export type TabList<T extends keyof TabParamList> = {

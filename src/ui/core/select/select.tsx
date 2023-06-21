@@ -1,3 +1,4 @@
+import { Entypo } from '@expo/vector-icons';
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
@@ -7,7 +8,6 @@ import colors from '@/ui/theme/colors';
 import { Text } from '../text';
 import { TouchableOpacity } from '../touchable-opacity';
 import { View } from '../view';
-import { Arrow } from './icons';
 import type { Option } from './options';
 import { Options } from './options';
 
@@ -69,7 +69,11 @@ export const Select = (props: SelectProps) => {
               {textValue}
             </Text>
           </View>
-          <Arrow color={isDark ? colors.white : colors.black} />
+          <Entypo
+            name="triangle-down"
+            size={16}
+            color={isDark ? colors.white : colors.black}
+          />
         </TouchableOpacity>
         {error && <Text variant="error">{error}</Text>}
       </View>

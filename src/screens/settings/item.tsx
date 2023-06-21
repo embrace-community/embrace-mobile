@@ -1,7 +1,8 @@
+import { Entypo } from '@expo/vector-icons';
 import * as React from 'react';
 
 import type { TxKeyPath } from '@/core';
-import { ArrowRight, Text, TouchableOpacity, View } from '@/ui';
+import { Text, TouchableOpacity, View } from '@/ui';
 
 type ItemProps = {
   text: TxKeyPath;
@@ -28,7 +29,7 @@ export const Item = ({ text, value, icon, onPress }: ItemProps) => {
         </Text>
         {isPressable && (
           <View className="pl-2">
-            <ArrowRight />
+            <Entypo name="chevron-thin-right" size={16} />
           </View>
         )}
       </View>

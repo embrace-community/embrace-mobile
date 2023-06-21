@@ -1,3 +1,4 @@
+import { Entypo } from '@expo/vector-icons';
 import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
@@ -8,7 +9,6 @@ import { colors } from '@/ui/theme';
 import { renderBackdrop } from '../bottom-sheet';
 import { Pressable } from '../pressable';
 import { Text } from '../text';
-import { Check } from './icons';
 
 export type Option = { label: string; value: string | number };
 
@@ -85,7 +85,13 @@ const Option = ({
       <Text variant="md" className="flex-1 dark:text-slate-100">
         {label}
       </Text>
-      {selected && <Check color={isDark ? colors.white : colors.black} />}
+      {selected && (
+        <Entypo
+          name="check"
+          size={16}
+          color={isDark ? colors.white : colors.black}
+        />
+      )}
     </Pressable>
   );
 };

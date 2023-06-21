@@ -1,10 +1,10 @@
 import { Env } from '@env';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
 
 import { translate } from '@/core';
 import { ScrollView, Text, View } from '@/ui';
-import { Github, Rate, Share, Support, Website } from '@/ui/icons';
 import colors from '@/ui/theme/colors';
 
 import { Item } from './item';
@@ -35,17 +35,23 @@ export const Settings = () => {
         <ItemsContainer title="settings.support_us">
           <Item
             text="settings.share"
-            icon={<Share color={iconColor} />}
+            icon={<Ionicons name="share-outline" size={24} color={iconColor} />}
             onPress={() => {}}
           />
           <Item
             text="settings.rate"
-            icon={<Rate color={iconColor} />}
+            icon={
+              <MaterialCommunityIcons
+                name="star-outline"
+                size={24}
+                color={iconColor}
+              />
+            }
             onPress={() => {}}
           />
           <Item
             text="settings.support"
-            icon={<Support color={iconColor} />}
+            icon={<Ionicons name="heart-outline" size={24} color={iconColor} />}
             onPress={() => {}}
           />
         </ItemsContainer>
@@ -53,14 +59,12 @@ export const Settings = () => {
         <ItemsContainer title="settings.links">
           <Item text="settings.privacy" onPress={() => {}} />
           <Item text="settings.terms" onPress={() => {}} />
-          <Item
-            text="settings.github"
-            icon={<Github color={iconColor} />}
-            onPress={() => {}}
-          />
+
           <Item
             text="settings.website"
-            icon={<Website color={iconColor} />}
+            icon={
+              <MaterialCommunityIcons name="web" size={24} color={iconColor} />
+            }
             onPress={() => {}}
           />
         </ItemsContainer>
