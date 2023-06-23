@@ -3,7 +3,11 @@ import React from 'react';
 
 import Accounts from '../screens/user/accounts';
 
-const UserStack = createNativeStackNavigator();
+export type UserStackParamList = {
+  Accounts: undefined;
+};
+
+const UserStack = createNativeStackNavigator<UserStackParamList>();
 
 export const UserNavigator = () => {
   return (

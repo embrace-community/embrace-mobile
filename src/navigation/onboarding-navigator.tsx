@@ -5,9 +5,13 @@ import {
   CreateAccountScreen,
   GettingStartedScreen,
 } from '../screens/onboarding';
-// import MainStackScreen from './MainStack';
 
-const OnboardingStack = createNativeStackNavigator();
+export type OnboardingStackParamList = {
+  GettingStarted: undefined;
+  CreateAccount: undefined;
+};
+
+const OnboardingStack = createNativeStackNavigator<OnboardingStackParamList>();
 
 export const OnboardingNavigator = () => {
   return (
@@ -25,7 +29,6 @@ export const OnboardingNavigator = () => {
         name="CreateAccount"
         component={CreateAccountScreen}
       />
-      {/* <OnboardingStack.Screen name="Main" component={MainStackScreen} /> */}
     </OnboardingStack.Navigator>
   );
 };
