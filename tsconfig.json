@@ -11,7 +11,8 @@
     "esModuleInterop": true,
     "checkJs": true,
     "jsx": "react-jsx",
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules",

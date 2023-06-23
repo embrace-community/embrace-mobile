@@ -3,7 +3,12 @@ module.exports = function (api) {
   return {
     presets: ['babel-preset-expo'],
     plugins: [
-      '@babel/plugin-transform-flow-strip-types',
+      '@realm/babel-plugin',
+      '@babel/plugin-transform-flow-strip-types', // Seems to stop realm plugin working so has to go afterwards
+      ['@babel/plugin-proposal-decorators', { legacy: true }],
+      ['@babel/plugin-transform-private-methods', { loose: true }],
+      ['nativewind/babel'],
+      'react-native-reanimated/plugin',
       [
         'module-resolver',
         {
@@ -28,9 +33,6 @@ module.exports = function (api) {
           ],
         },
       ],
-      ['nativewind/babel', { mode: 'compileOnly' }],
-      'react-native-reanimated/plugin',
-      ['@babel/plugin-transform-private-methods', { loose: true }],
     ],
   };
 };

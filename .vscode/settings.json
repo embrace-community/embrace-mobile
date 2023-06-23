@@ -21,15 +21,19 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "cSpell.words": [
+    "BSON",
+    "cids",
     "craftzdog",
     "Entypo",
     "Flashlist",
     "gorhom",
     "hexlify",
     "Ionicons",
+    "IPFS",
     "Lato",
     "MMKV",
     "nativewind",
+    "Onboarded",
     "preinstall",
     "Pressable",
     "zustand"

@@ -1,32 +1,21 @@
-import type { NativeStackNavigationHelpers } from '@react-navigation/native-stack/lib/typescript/src/types';
+import { useQuery } from '@realm/react';
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, SafeAreaView } from 'react-native';
 
 import AccountCard from '@/components/account-card';
+import { Profile } from '@/db/local/profile-model';
+import { Text } from '@/ui';
 
-type Props = {
-  navigation: NativeStackNavigationHelpers;
-};
-
-export default function Home({ navigation }: Props) {
-  const profiles = [
-    {
-      handle: '0x123',
-      displayName: '0x123',
-      localAvatarUri: 'https://avatars.githubusercontent.com/u/1024025?v=4',
-    },
-  ];
+export default function Home() {
+  const profiles = useQuery(Profile);
 
   return (
     <SafeAreaView className="flex flex-1 items-center justify-center gap-3 bg-slate-100">
       <FlatList
-        className="w-full flex-1 gap-3 px-5 py-8"
+        className="w-full flex-1 px-5 py-3"
         data={profiles}
-        renderItem={({ item }) => (
-          <AccountCard profile={item} navigation={navigation} />
-        )}
-        keyExtractor={(item) => item.handle}
+        renderItem={({ item }) => <AccountCard profile={item} />}
+        keyExtractor={(item) => item._id.toHexString()}
         // eslint-disable-next-line react/no-unstable-nested-components
         ListEmptyComponent={() => (
           <Text className="px-8 text-center text-lg text-gray-600">
