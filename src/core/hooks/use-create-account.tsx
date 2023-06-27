@@ -1,12 +1,12 @@
-import { Realm, useRealm } from '@realm/react';
-import { useCallback } from 'react';
+import { Env } from '@env';
+import { useNavigation } from '@react-navigation/native';
 import { Alert } from 'react-native';
 
 import { useUploadMetadata } from '@/core/hooks/use-upload-metadata';
 
 import { useIsOnboarded } from '../storage';
-import { useWallet } from './use-wallet';
-
+import useProfile from './use-profile';
+import { useNumCreatedAccounts, useWallet } from './use-wallet';
 type Props = {
   handle: string;
   displayName: string;
@@ -21,14 +21,23 @@ export const useCreateAccountForm = ({
   setLoading,
 }: Props) => {
   const { uploadMetadata } = useUploadMetadata();
-  // const { profile } = useProfile();
-  const realmDb = useRealm();
-  const { createWalletAccount } = useWallet();
-  const [_, setIsOnboarded] = useIsOnboarded();
+  const profile = useProfile();
+  const { navigate } = useNavigation();
+  const maxNumberOfAccounts = Number(Env.MAX_NUMBER_OF_ACCOUNTS);
+  const [numCreatedAccounts] = useNumCreatedAccounts();
 
-  const createAccount = useCallback(async () => {
+  const { createWalletAccount } = useWallet();
+  const [isOnboarded, setIsOnboarded] = useIsOnboarded();
+
+  const createAccount = async () => {
     if (!isValidForm(handle, displayName))
       return Alert.alert('Please enter a valid handle and display name');
+
+    if (numCreatedAccounts >= maxNumberOfAccounts)
+      return Alert.alert(
+        'Maximum number of accounts reached',
+        `You can only create ${maxNumberOfAccounts} accounts`
+      );
 
     setLoading(true);
 
@@ -45,40 +54,36 @@ export const useCreateAccountForm = ({
 
       console.log('cids', cids);
 
-      // TODO: Save to local DB
-      realmDb.write(() => {
-        const profile = {
-          _id: new Realm.BSON.ObjectId(),
-          handle,
-          displayName,
-          accountAddress: account.address,
-          localAvatarUri: image,
-          metadataUri: cids?.metadataCid ? `ipfs://${cids.metadataCid}` : null,
-          avatarUri: cids?.avatarCid ? `ipfs://${cids.avatarCid}` : null,
-          tokenId: null,
-        };
-        console.log('Profile created', profile);
-        const create = realmDb.create('Profile', profile);
+      const newProfile = {
+        handle,
+        displayName,
+        accountAddress: account.address,
+        accountNumber: account.number,
+        localAvatarUri: image,
+        metadataUri: cids?.metadataCid ? `ipfs://${cids.metadataCid}` : null,
+        avatarUri: cids?.avatarCid ? `ipfs://${cids.avatarCid}` : null,
+        tokenId: null,
+      };
 
-        console.log('Profile created', create);
-      });
+      await profile.save(newProfile);
+
+      // TODO: Navigate to Account Home
+      // Need to pass the account Number
 
       setLoading(false);
-      setIsOnboarded(true);
+
+      if (!isOnboarded) {
+        setIsOnboarded(true);
+      }
+
+      navigate('AccountHome', {
+        params: { accountNumber: account.number },
+      });
     } else {
       setLoading(false);
       Alert.alert('Error', 'There was a problem creating your profile');
     }
-  }, [
-    handle,
-    displayName,
-    setLoading,
-    uploadMetadata,
-    image,
-    createWalletAccount,
-    setIsOnboarded,
-    realmDb,
-  ]);
+  };
 
   return {
     createAccount,

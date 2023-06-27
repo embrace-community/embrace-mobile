@@ -1,16 +1,12 @@
-import type { NativeStackNavigationHelpers } from '@react-navigation/native-stack/lib/typescript/src/types';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 
 import { Button, Image, SafeAreaView, Text, View } from '@/ui';
 
-const logo = require('../../../assets/logo.png');
+const logo = require('../../assets/logo.png');
 
-type Props = {
-  navigation: NativeStackNavigationHelpers;
-};
-
-export const GettingStartedScreen = ({ navigation }: Props) => {
-  // const { navigate } = useNavigation();
+export const GettingStartedScreen = () => {
+  const { navigate } = useNavigation();
   return (
     <SafeAreaView className="flex flex-1 items-center justify-center gap-3 bg-violet-100">
       <Image source={logo} className="h-48 w-48" />
@@ -33,11 +29,9 @@ export const GettingStartedScreen = ({ navigation }: Props) => {
         <Button
           label="Get Started"
           onPress={() => {
-            navigation.navigate('CreateAccount');
+            navigate('CreateAccount');
           }}
-        >
-          <Text className="text-white">Get Started</Text>
-        </Button>
+        />
       </View>
     </SafeAreaView>
   );

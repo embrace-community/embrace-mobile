@@ -7,6 +7,7 @@ export class Profile extends Realm.Object {
   handle!: string;
   displayName!: string;
   accountAddress!: string;
+  accountNumber!: number;
   localAvatarUri?: string;
   metadataUri!: string;
   avatarUri?: string;

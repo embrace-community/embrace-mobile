@@ -1,18 +1,29 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import Accounts from '../screens/user/accounts';
+import { UserAccountsScreen, UserCreateAccountScreen } from '@/screens';
 
 export type UserStackParamList = {
-  Accounts: undefined;
+  UserAccounts: undefined;
+  UserCreateAccount: undefined;
 };
 
 const UserStack = createNativeStackNavigator<UserStackParamList>();
 
 export const UserNavigator = () => {
   return (
-    <UserStack.Navigator screenOptions={{ headerBackVisible: false }}>
-      <UserStack.Screen name="Accounts" component={Accounts} />
+    <UserStack.Navigator
+      screenOptions={{
+        headerShown: false,
+        headerBackVisible: false,
+        animation: 'none',
+      }}
+    >
+      <UserStack.Screen name="UserAccounts" component={UserAccountsScreen} />
+      <UserStack.Screen
+        name="UserCreateAccount"
+        component={UserCreateAccountScreen}
+      />
     </UserStack.Navigator>
   );
 };

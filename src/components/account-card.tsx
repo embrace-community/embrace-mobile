@@ -1,4 +1,5 @@
 import { FontAwesome } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -9,24 +10,28 @@ type Props = {
 };
 
 export default function AccountCard({ profile }: Props) {
+  const { navigate } = useNavigation();
+
   return (
     <TouchableOpacity
       onPress={async () => {
-        console.log('navigate to profile', profile);
+        navigate('AccountHome', {
+          params: { accountNumber: profile.accountNumber },
+        });
       }}
     >
-      <View className="mx-2 my-1 h-36 flex-row items-center justify-center rounded-xl border-2 border-slate-200 bg-white p-6">
-        <View className="mr-1 h-28 w-28 items-center justify-center rounded-full text-center text-lg">
+      <View className="mx-2 my-1 h-28 flex-row items-center justify-center rounded-xl border-[1px] border-slate-200 bg-white p-6">
+        <View className="mr-1 h-28 w-16 items-center justify-center rounded-full text-center text-lg">
           {profile.localAvatarUri ? (
             <Image
-              className="h-28 w-28 rounded-full"
+              className="h-16 w-16 rounded-full"
               source={{
                 uri: profile.localAvatarUri,
               }}
             />
           ) : (
-            <View className="h-28 w-28 items-center justify-center rounded-full bg-slate-100">
-              <FontAwesome name="user" size={48} color={'grey'} />
+            <View className="h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+              <FontAwesome name="user" size={24} color={'grey'} />
             </View>
           )}
         </View>

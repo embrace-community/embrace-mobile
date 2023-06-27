@@ -2,8 +2,8 @@ import { Realm } from '@realm/react';
 
 import { Profile } from '@/db/local/profile-model';
 
-import { Env } from '../env';
-import { defaultStorage, walletStorage } from '../storage';
+import { Env } from '../core/env';
+import { defaultStorage, walletStorage } from '../core/storage';
 
 const reset = () => {
   // Only allow when in dev mode

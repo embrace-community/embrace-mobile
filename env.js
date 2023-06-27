@@ -74,6 +74,7 @@ const client = z.object({
   // ADD YOUR CLIENT ENV VARS HERE
   API_URL: z.string(),
   API_ENDPOINT_IPFS: z.string(),
+  MAX_NUMBER_OF_ACCOUNTS: z.string(),
 });
 
 const buildTime = z.object({
@@ -94,6 +95,7 @@ const _clientEnv = {
   // ADD YOUR ENV VARS HERE TOO
   API_URL: process.env.API_URL,
   API_ENDPOINT_IPFS: process.env.API_ENDPOINT_IPFS,
+  MAX_NUMBER_OF_ACCOUNTS: process.env.MAX_NUMBER_OF_ACCOUNTS,
 };
 
 /**

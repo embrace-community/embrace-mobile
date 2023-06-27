@@ -16,8 +16,7 @@ loadSelectedTheme();
 SplashScreen.preventAutoHideAsync();
 
 // Only for dev
-import { reset } from './core/hooks/use-reset';
-reset();
+// reset();
 
 const App = () => {
   return (

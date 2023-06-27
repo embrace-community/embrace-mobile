@@ -27,7 +27,7 @@ export const Root = () => {
       screenOptions={{
         headerShown: false,
         gestureEnabled: false,
-        animation: 'fade_from_bottom',
+        animation: 'none',
       }}
     >
       {!isOnboarded ? (

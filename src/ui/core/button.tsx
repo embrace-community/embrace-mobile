@@ -41,16 +41,19 @@ export const buttonVariants: BVariant = {
 
 interface Props extends TouchableOpacityProps {
   variant?: VariantName;
-  label?: string;
+  label?: string | null;
   loading?: boolean;
+  disabled?: boolean;
+  icon?: React.ReactNode;
 }
 
 export const Button = ({
-  label,
+  label = null,
   loading = false,
   variant = 'primary',
   disabled = false,
   className = '',
+  icon = null,
   ...props
 }: Props) => {
   return (
@@ -72,15 +75,17 @@ export const Button = ({
            ${buttonVariants[variant].indicator}
           `}
         />
-      ) : (
+      ) : label ? (
         <Text
           className={`
           ${buttonVariants.defaults.label}
-           ${buttonVariants[variant].label}
+          ${buttonVariants[variant].label}
           `}
         >
           {label}
         </Text>
+      ) : (
+        icon && icon
       )}
     </TouchableOpacity>
   );

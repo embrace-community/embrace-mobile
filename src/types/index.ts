@@ -10,4 +10,19 @@ declare module 'react-native-quick-crypto' {
     keylen: number,
     digest?: string | undefined
   ): Buffer;
+
+  // export function scrypt(
+  //   password: BinaryLike,
+  //   salt: BinaryLike,
+  //   options: ScryptOptions,
+  //   keylen: number,
+  //   callback?: () => void
+  // ): Promise<string>;
+
+  // export function scryptSync(
+  //   password: BinaryLike,
+  //   salt: BinaryLike,
+  //   options: ScryptOptions,
+  //   keylen: number
+  // ): globalThis.Buffer;
 }

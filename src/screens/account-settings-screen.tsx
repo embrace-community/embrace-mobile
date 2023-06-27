@@ -7,10 +7,10 @@ import { translate } from '@/core';
 import { ScrollView, Text, View } from '@/ui';
 import colors from '@/ui/theme/colors';
 
-import { Item } from './item';
-import { ItemsContainer } from './items-container';
-import { LanguageItem } from './language-item';
-import { ThemeItem } from './theme-item';
+import { Item } from '../components/item';
+import { ItemsContainer } from '../components/items-container';
+import { LanguageItem } from '../components/language-item';
+import { ThemeItem } from '../components/theme-item';
 
 export const Settings = () => {
   const { colorScheme } = useColorScheme();
