@@ -76,6 +76,9 @@ export const useAccount = (accountNumber: number) => {
   const accountPkKey = getAccountPkStorageKey(accountNumber);
   const accountAddressKey = getAccountAddressStorageKey(accountNumber);
 
+  if (!accountPkKey || !accountAddressKey)
+    throw new Error('Account PK or Address key is null');
+
   const [accountPk, setAccountPk] = useMMKVString(accountPkKey, walletStorage);
   const [accountAddress, setAccountAddress] = useMMKVString(
     accountAddressKey,
@@ -114,12 +117,16 @@ export const useNumCreatedAccounts = () => {
 };
 
 const getAccountPkStorageKey = (accountNumber: number) => {
-  return walletStorageKeys.ACCOUNT_PK.replace('%s', accountNumber.toString());
+  try {
+    return walletStorageKeys.ACCOUNT_PK.replace('%s', accountNumber.toString());
+  } catch (error) {}
 };
 
 const getAccountAddressStorageKey = (accountNumber: number) => {
-  return walletStorageKeys.ACCOUNT_ADDRESS.replace(
-    '%s',
-    accountNumber.toString()
-  );
+  try {
+    return walletStorageKeys.ACCOUNT_ADDRESS.replace(
+      '%s',
+      accountNumber.toString()
+    );
+  } catch (error) {}
 };

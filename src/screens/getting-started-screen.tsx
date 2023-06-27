@@ -29,7 +29,9 @@ export const GettingStartedScreen = () => {
         <Button
           label="Get Started"
           onPress={() => {
-            navigate('CreateAccount');
+            navigate('Onboarding', {
+              screen: 'CreateAccount',
+            });
           }}
         />
       </View>

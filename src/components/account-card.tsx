@@ -15,8 +15,11 @@ export default function AccountCard({ profile }: Props) {
   return (
     <TouchableOpacity
       onPress={async () => {
-        navigate('AccountHome', {
-          params: { accountNumber: profile.accountNumber },
+        navigate('Account', {
+          screen: 'AccountHome',
+          params: {
+            accountNumber: profile.accountNumber,
+          },
         });
       }}
     >

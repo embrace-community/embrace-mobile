@@ -1,6 +1,6 @@
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { type RouteProp, useNavigation } from '@react-navigation/native';
+import { type RouteProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColorScheme } from 'nativewind';
 import type { ComponentType } from 'react';
@@ -11,7 +11,7 @@ import { Home, Settings, Style } from '@/screens';
 import { colors, Pressable } from '@/ui';
 
 export type AccountParamList = {
-  AccountHome: { params: { accountNumber: number } };
+  AccountHome: { accountNumber: number };
   AccountStyle: undefined;
   AccountSettings: undefined;
 };
@@ -72,7 +72,7 @@ const BarIcon = ({ color, name, ...reset }: BarIconType) => {
 };
 
 export const AccountNavigator = ({ navigation }) => {
-  const {} = useNavigation();
+  // const { navigate } = useNavigation();
 
   const { colorScheme } = useColorScheme();
   return (
@@ -87,7 +87,8 @@ export const AccountNavigator = ({ navigation }) => {
         // eslint-disable-next-line react/no-unstable-nested-components
         headerLeft: () => (
           <Pressable
-            onPress={() => navigation.push('User', { screen: 'Accounts' })}
+            onPress={() => navigation.push('User', { screen: 'UserAccounts' })}
+            // onPress={() => navigate('UserAccounts')}
             className="ml-2 p-2"
           >
             <AntDesign name="arrowleft" size={24} color="black" />

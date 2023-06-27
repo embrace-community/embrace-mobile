@@ -23,9 +23,13 @@ export const UserCreateAccountScreen = () => {
 
   const back = () => {
     if (!isOnboarded) {
-      navigate('GettingStarted');
+      navigate('Onboarding', {
+        screen: 'GettingStarted',
+      });
     } else {
-      navigate('UserAccounts');
+      navigate('User', {
+        screen: 'UserAccounts',
+      });
     }
   };
 

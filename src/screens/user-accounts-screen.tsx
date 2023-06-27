@@ -26,7 +26,7 @@ export const UserAccountsScreen = () => {
       const _createAccountIcon = (
         <View className="mx-auto mt-3 w-16">
           <Button
-            onPress={() => navigate('CreateAccount')}
+            onPress={() => navigate('User', { screen: 'UserCreateAccount' })}
             className="mb-4 rounded-full p-5"
             icon={
               <AntDesign

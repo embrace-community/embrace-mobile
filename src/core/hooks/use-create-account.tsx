@@ -76,8 +76,11 @@ export const useCreateAccountForm = ({
         setIsOnboarded(true);
       }
 
-      navigate('AccountHome', {
-        params: { accountNumber: account.number },
+      navigate('Account', {
+        screen: 'AccountHome',
+        params: {
+          accountNumber: account.number,
+        },
       });
     } else {
       setLoading(false);
