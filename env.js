@@ -28,12 +28,12 @@ require('dotenv').config({
  * Such as: bundle id, package name, app name.
  *
  * You can add them to the .env file but we think it's better to keep them here as as we use prefix to generate this values based on the APP_ENV
- * for example: if the APP_ENV is staging, the bundle id will be com.embrace-mobile.staging
+ * for example: if the APP_ENV is staging, the bundle id will be com.embrace.mobile.staging
  */
 
-const BUNDLE_ID = 'com.embrace-mobile'; // ios bundle id
-const PACKAGE = 'com.embrace-mobile'; // android package name
-const NAME = 'embrace-mobile'; // app name
+const BUNDLE_ID = 'com.embrace.mobile'; // ios bundle id
+const PACKAGE = 'com.embrace.mobile'; // android package name
+const NAME = 'Embrace'; // app name
 
 /**
  * We declare a function withEnvSuffix that will add a suffix to the variable name based on the APP_ENV
@@ -73,6 +73,8 @@ const client = z.object({
 
   // ADD YOUR CLIENT ENV VARS HERE
   API_URL: z.string(),
+  API_ENDPOINT_IPFS: z.string(),
+  MAX_NUMBER_OF_ACCOUNTS: z.string(),
 });
 
 const buildTime = z.object({
@@ -92,6 +94,8 @@ const _clientEnv = {
 
   // ADD YOUR ENV VARS HERE TOO
   API_URL: process.env.API_URL,
+  API_ENDPOINT_IPFS: process.env.API_ENDPOINT_IPFS,
+  MAX_NUMBER_OF_ACCOUNTS: process.env.MAX_NUMBER_OF_ACCOUNTS,
 };
 
 /**

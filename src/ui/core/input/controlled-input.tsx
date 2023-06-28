@@ -37,6 +37,7 @@ export function ControlledInput<T extends FieldValues>(
     <Input
       ref={field.ref}
       autoCapitalize="none"
+      // @ts-ignore
       onChangeText={field.onChange}
       value={field.value as string}
       {...inputProps}

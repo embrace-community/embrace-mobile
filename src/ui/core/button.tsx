@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import type { TouchableOpacityProps } from 'react-native';
 
@@ -17,49 +18,53 @@ type BVariant = {
 
 export const buttonVariants: BVariant = {
   defaults: {
-    container:
-      'flex-row items-center justify-center rounded-full px-12 py-3 my-2',
-    label: 'text-[16px] font-medium text-white',
+    container: 'flex-row items-center justify-center rounded-md h-16 p-3',
+    label: 'text-[16px] text-white',
     indicator: 'text-white h-[30px]',
   },
   primary: {
-    container: 'bg-black',
+    container: 'bg-primary-600',
     label: '',
     indicator: 'text-white',
   },
   secondary: {
-    container: 'bg-primary-600',
+    container: 'bg-slate-500',
     label: 'text-secondary-600',
     indicator: 'text-white',
   },
   outline: {
-    container: 'border border-neutral-400',
-    label: 'text-black dark:text-charcoal-100',
-    indicator: 'text-black',
+    container: 'border border-slate-400',
+    label: 'text-slate-600 dark:text-slate-100',
+    indicator: 'text-slate-600',
   },
 };
 
 interface Props extends TouchableOpacityProps {
   variant?: VariantName;
-  label?: string;
+  label?: string | null;
   loading?: boolean;
+  disabled?: boolean;
+  icon?: React.ReactNode;
 }
 
 export const Button = ({
-  label,
+  label = null,
   loading = false,
   variant = 'primary',
   disabled = false,
+  className = '',
+  icon = null,
   ...props
 }: Props) => {
   return (
     <TouchableOpacity
       disabled={disabled || loading}
-      className={`
-    ${buttonVariants.defaults.container}
-     ${buttonVariants[variant].container}
-     ${disabled ? 'opacity-50' : ''}
-    `}
+      className={classNames({
+        [buttonVariants.defaults.container]: true,
+        [buttonVariants[variant].container]: true,
+        'opacity-50': disabled,
+        [className]: true,
+      })}
       {...props}
     >
       {loading ? (
@@ -70,15 +75,17 @@ export const Button = ({
            ${buttonVariants[variant].indicator}
           `}
         />
-      ) : (
+      ) : label ? (
         <Text
           className={`
           ${buttonVariants.defaults.label}
-           ${buttonVariants[variant].label}
+          ${buttonVariants[variant].label}
           `}
         >
           {label}
         </Text>
+      ) : (
+        icon && icon
       )}
     </TouchableOpacity>
   );

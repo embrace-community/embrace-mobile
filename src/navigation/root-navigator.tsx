@@ -2,26 +2,25 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 
-import { useAuth } from '@/core';
-import { useIsFirstTime } from '@/core/hooks';
-import { Onboarding } from '@/screens';
+import { useIsOnboarded } from '@/core/storage';
 
-import { AuthNavigator } from './auth-navigator';
+import { AccountNavigator } from './account-navigator';
 import { NavigationContainer } from './navigation-container';
-import { TabNavigator } from './tab-navigator';
+import { OnboardingNavigator } from './onboarding-navigator';
+import { UserNavigator } from './user-navigator';
+
 const Stack = createNativeStackNavigator();
 
 export const Root = () => {
-  const status = useAuth.use.status();
-  const [isFirstTime] = useIsFirstTime();
-  const hideSplash = React.useCallback(async () => {
-    await SplashScreen.hideAsync();
-  }, []);
+  const [isOnboarded] = useIsOnboarded();
+
   useEffect(() => {
-    if (status !== 'idle') {
-      hideSplash();
+    async function hideSplash() {
+      await SplashScreen.hideAsync();
     }
-  }, [hideSplash, status]);
+
+    hideSplash();
+  }, []);
 
   return (
     <Stack.Navigator
@@ -31,15 +30,12 @@ export const Root = () => {
         animation: 'none',
       }}
     >
-      {isFirstTime ? (
-        <Stack.Screen name="Onboarding" component={Onboarding} />
+      {!isOnboarded ? (
+        <Stack.Screen name="Onboarding" component={OnboardingNavigator} />
       ) : (
         <Stack.Group>
-          {status === 'signOut' ? (
-            <Stack.Screen name="Auth" component={AuthNavigator} />
-          ) : (
-            <Stack.Screen name="App" component={TabNavigator} />
-          )}
+          <Stack.Screen name="User" component={UserNavigator} />
+          <Stack.Screen name="Account" component={AccountNavigator} />
         </Stack.Group>
       )}
     </Stack.Navigator>

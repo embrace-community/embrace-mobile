@@ -11,33 +11,37 @@ import { Text } from '../text';
 import { View } from '../view';
 
 const STextInput = styled(NTextInput);
+import classNames from 'classnames';
 
 export interface NInputProps extends TextInputProps {
   label?: string;
   disabled?: boolean;
   error?: string;
+  className?: string;
 }
 
 export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
-  const { label, error, ...inputProps } = props;
+  const { label, error, className, ...inputProps } = props;
+  const includedClassNames = className ?? '';
+
   const { colorScheme } = useColorScheme();
   const isDark = colorScheme === 'dark';
-  const [isFocussed, setIsFocussed] = React.useState(false);
-  const onBlur = React.useCallback(() => setIsFocussed(false), []);
-  const onFocus = React.useCallback(() => setIsFocussed(true), []);
+  const [isFocused, setIsFocused] = React.useState(false);
+  const onBlur = React.useCallback(() => setIsFocused(false), []);
+  const onFocus = React.useCallback(() => setIsFocused(true), []);
 
   const borderColor = error
     ? 'border-danger-600'
-    : isFocussed
+    : isFocused
     ? isDark
       ? 'border-white'
       : 'border-neutral-600'
     : isDark
-    ? 'border-charcoal-700'
+    ? 'border-slate-700'
     : 'border-neutral-400';
 
   const bgColor = isDark
-    ? 'bg-charcoal-800'
+    ? 'bg-slate-800'
     : error
     ? 'bg-danger-50'
     : 'bg-neutral-200';
@@ -48,11 +52,7 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
         <Text
           variant="md"
           className={
-            error
-              ? 'text-danger-600'
-              : isDark
-              ? 'text-charcoal-100'
-              : 'text-black'
+            error ? 'text-danger-600' : isDark ? 'text-slate-100' : 'text-black'
           }
         >
           {label}
@@ -62,7 +62,14 @@ export const Input = React.forwardRef<TextInput, NInputProps>((props, ref) => {
         testID="STextInput"
         ref={ref}
         placeholderTextColor={colors.neutral[400]}
-        className={`mt-0 border-[1px] py-4 px-2  ${borderColor} rounded-md ${bgColor} text-[16px] ${textDirection} dark:text-charcoal-100`}
+        className={classNames({
+          'mt-0 border-[1px] px-2 py-4 rounded-md text-[16px] dark:text-slate-100':
+            true,
+          [borderColor]: true,
+          [bgColor]: true,
+          [textDirection]: true,
+          [includedClassNames]: true,
+        })}
         onBlur={onBlur}
         onFocus={onFocus}
         {...inputProps}

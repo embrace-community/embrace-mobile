@@ -19,6 +19,7 @@ export function ControlledSelect<T extends FieldValues>(
   const { field, fieldState } = useController({ control, name, rules });
   return (
     <Select
+      // @ts-ignore
       onSelect={field.onChange}
       value={field.value}
       error={fieldState.error?.message}

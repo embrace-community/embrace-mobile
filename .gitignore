@@ -13,3 +13,7 @@ yarn-error.log
 
 # macOS
 .DS_Store
+
+.env.development
+.env.production
+.env.staging

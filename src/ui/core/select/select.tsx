@@ -1,3 +1,4 @@
+import { Entypo } from '@expo/vector-icons';
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
@@ -7,7 +8,6 @@ import colors from '@/ui/theme/colors';
 import { Text } from '../text';
 import { TouchableOpacity } from '../touchable-opacity';
 import { View } from '../view';
-import { Arrow } from './icons';
 import type { Option } from './options';
 import { Options } from './options';
 
@@ -60,7 +60,7 @@ export const Select = (props: SelectProps) => {
           </Text>
         )}
         <TouchableOpacity
-          className={`mt-0 flex-row items-center justify-center border-[1px] py-3 px-2  ${borderColor} rounded-md ${bgColor} text-[16px]`}
+          className={`mt-0 flex-row items-center justify-center border-[1px] px-2 py-3  ${borderColor} rounded-md ${bgColor} text-[16px]`}
           disabled={disabled}
           onPress={open}
         >
@@ -69,7 +69,11 @@ export const Select = (props: SelectProps) => {
               {textValue}
             </Text>
           </View>
-          <Arrow color={isDark ? colors.white : colors.black} />
+          <Entypo
+            name="triangle-down"
+            size={16}
+            color={isDark ? colors.white : colors.black}
+          />
         </TouchableOpacity>
         {error && <Text variant="error">{error}</Text>}
       </View>
@@ -85,11 +89,11 @@ const useColors = (error: boolean) => {
   const borderColor = error
     ? 'border-danger-600'
     : isDark
-    ? 'border-charcoal-700'
+    ? 'border-slate-700'
     : 'border-neutral-400';
 
   const bgColor = isDark
-    ? 'bg-charcoal-800'
+    ? 'bg-slate-800'
     : error
     ? 'bg-danger-50'
     : 'bg-neutral-200';
@@ -97,13 +101,13 @@ const useColors = (error: boolean) => {
   const labelColor = error
     ? 'text-danger-600'
     : isDark
-    ? 'text-charcoal-100'
+    ? 'text-slate-100'
     : 'text-black';
 
   const valueColor = error
     ? 'text-danger-600'
     : isDark
-    ? 'text-charcoal-100'
+    ? 'text-slate-100'
     : 'text-neutral-600';
 
   return { borderColor, bgColor, labelColor, valueColor } as const;
