@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { useActiveAccount } from '@/core';
 import { Image, Text, View } from '@/ui';
 
 type Props = {
@@ -11,14 +12,16 @@ type Props = {
 
 export default function AccountCard({ profile }: Props) {
   const { navigate } = useNavigation();
+  const [_, setActiveAccount] = useActiveAccount();
 
   return (
     <TouchableOpacity
       onPress={async () => {
+        setActiveAccount(profile._id);
         navigate('Account', {
-          screen: 'AccountHome',
+          screen: 'Home',
           params: {
-            accountNumber: profile.accountNumber,
+            accountNumber: profile._id,
           },
         });
       }}

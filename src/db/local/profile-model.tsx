@@ -1,13 +1,13 @@
-import Realm, { BSON } from 'realm';
+import Realm from 'realm';
 
 //https://github.com/realm/realm-js/blob/main/templates/expo-template
 
 export class Profile extends Realm.Object {
-  _id: BSON.ObjectId = new BSON.ObjectId();
+  // _id: BSON.ObjectId = new BSON.ObjectId();
+  _id!: Realm.Types.Int;
   handle!: string;
   displayName!: string;
   accountAddress!: string;
-  accountNumber!: number;
   localAvatarUri?: string;
   metadataUri!: string;
   avatarUri?: string;

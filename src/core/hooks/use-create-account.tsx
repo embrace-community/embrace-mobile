@@ -46,6 +46,7 @@ export const useCreateAccountForm = ({
 
     // 2 - Upload metadata & avatar to IPFS
     const data = getFormData(image, handle, displayName);
+
     const result = await uploadMetadata(data);
 
     // 3 - Save data to local DB
@@ -55,10 +56,10 @@ export const useCreateAccountForm = ({
       console.log('cids', cids);
 
       const newProfile = {
+        _id: account.number,
         handle,
         displayName,
         accountAddress: account.address,
-        accountNumber: account.number,
         localAvatarUri: image,
         metadataUri: cids?.metadataCid ? `ipfs://${cids.metadataCid}` : null,
         avatarUri: cids?.avatarCid ? `ipfs://${cids.avatarCid}` : null,
@@ -77,7 +78,7 @@ export const useCreateAccountForm = ({
       }
 
       navigate('Account', {
-        screen: 'AccountHome',
+        screen: 'Home',
         params: {
           accountNumber: account.number,
         },
@@ -102,7 +103,11 @@ const isValidForm = (handle: string, displayName: string): boolean => {
   return true;
 };
 
-const getFormData = (image, handle, displayName) => {
+const getFormData = (
+  image: string | null,
+  handle: string,
+  displayName: string
+) => {
   const data = new FormData();
 
   if (image) {

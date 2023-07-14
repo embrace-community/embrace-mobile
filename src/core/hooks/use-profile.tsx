@@ -1,4 +1,4 @@
-import { Realm, useRealm } from '@realm/react';
+import { useRealm } from '@realm/react';
 import { useCallback } from 'react';
 
 const useProfile = () => {
@@ -7,7 +7,6 @@ const useProfile = () => {
   const save = useCallback(
     async (profile: any) => {
       const newProfile = {
-        _id: new Realm.BSON.ObjectId(),
         ...profile,
       };
 

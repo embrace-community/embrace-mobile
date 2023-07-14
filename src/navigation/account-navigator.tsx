@@ -1,19 +1,21 @@
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { type RouteProp } from '@react-navigation/native';
+import { type RouteProp, useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useColorScheme } from 'nativewind';
 import type { ComponentType } from 'react';
 import * as React from 'react';
 import type { SvgProps } from 'react-native-svg';
 
+import { AccountHeader } from '@/components/account-header-title';
+import { useActiveAccount } from '@/core';
 import { Home, Settings, Style } from '@/screens';
 import { colors, Pressable } from '@/ui';
 
 export type AccountParamList = {
-  AccountHome: { accountNumber: number };
-  AccountStyle: undefined;
-  AccountSettings: undefined;
+  Home: { accountNumber: number };
+  Style: undefined;
+  Settings: undefined;
 };
 
 type TabType = {
@@ -29,13 +31,9 @@ type TabIconsType = {
 const Tab = createBottomTabNavigator<AccountParamList>();
 
 const tabsIcons: TabIconsType = {
-  AccountHome: (props: SvgProps) => <Entypo name="home" size={24} {...props} />,
-  AccountStyle: (props: SvgProps) => (
-    <Entypo name="palette" size={24} {...props} />
-  ),
-  AccountSettings: (props: SvgProps) => (
-    <Entypo name="cog" size={24} {...props} />
-  ),
+  Home: (props: SvgProps) => <Entypo name="home" size={24} {...props} />,
+  Style: (props: SvgProps) => <Entypo name="palette" size={24} {...props} />,
+  Settings: (props: SvgProps) => <Entypo name="cog" size={24} {...props} />,
 };
 
 export type TabList<T extends keyof AccountParamList> = {
@@ -45,17 +43,17 @@ export type TabList<T extends keyof AccountParamList> = {
 
 const tabs: TabType[] = [
   {
-    name: 'AccountHome',
+    name: 'Home',
     component: Home,
     label: 'Home',
   },
   {
-    name: 'AccountStyle',
+    name: 'Style',
     component: Style,
     label: 'Style',
   },
   {
-    name: 'AccountSettings',
+    name: 'Settings',
     component: Settings,
     label: 'Settings',
   },
@@ -71,8 +69,9 @@ const BarIcon = ({ color, name, ...reset }: BarIconType) => {
   return <Icon color={color} {...reset} />;
 };
 
-export const AccountNavigator = ({ navigation }) => {
-  // const { navigate } = useNavigation();
+export const AccountNavigator = () => {
+  const { navigate } = useNavigation();
+  const [activeAccount] = useActiveAccount();
 
   const { colorScheme } = useColorScheme();
   return (
@@ -87,19 +86,20 @@ export const AccountNavigator = ({ navigation }) => {
         // eslint-disable-next-line react/no-unstable-nested-components
         headerLeft: () => (
           <Pressable
-            onPress={() => navigation.push('User', { screen: 'UserAccounts' })}
-            // onPress={() => navigate('UserAccounts')}
+            onPress={() => navigate('App', { screen: 'Accounts' })}
             className="ml-2 p-2"
           >
-            <AntDesign name="arrowleft" size={24} color="black" />
+            <Ionicons name="chevron-back" size={24} color="black" />
           </Pressable>
         ),
       })}
     >
       <Tab.Group
-        screenOptions={{
+        screenOptions={() => ({
           headerShown: true,
-        }}
+          // eslint-disable-next-line react/no-unstable-nested-components
+          headerTitle: () => <AccountHeader accountNumber={activeAccount} />,
+        })}
       >
         {tabs.map(({ name, component, label }) => {
           return (

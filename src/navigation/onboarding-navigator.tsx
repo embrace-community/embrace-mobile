@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import { GettingStartedScreen, UserCreateAccountScreen } from '@/screens';
+import { CreateAccountScreen, GettingStartedScreen } from '@/screens';
 
 export type OnboardingStackParamList = {
   GettingStarted: undefined;
@@ -24,7 +24,7 @@ export const OnboardingNavigator = () => {
       />
       <OnboardingStack.Screen
         name="CreateAccount"
-        component={UserCreateAccountScreen}
+        component={CreateAccountScreen}
       />
     </OnboardingStack.Navigator>
   );

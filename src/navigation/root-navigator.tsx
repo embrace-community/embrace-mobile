@@ -1,20 +1,20 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SplashScreen from 'expo-splash-screen';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useIsOnboarded } from '@/core/storage';
 
 import { AccountNavigator } from './account-navigator';
+import { AppNavigator } from './app-navigator';
 import { NavigationContainer } from './navigation-container';
 import { OnboardingNavigator } from './onboarding-navigator';
-import { UserNavigator } from './user-navigator';
 
 const Stack = createNativeStackNavigator();
 
 export const Root = () => {
   const [isOnboarded] = useIsOnboarded();
 
-  useEffect(() => {
+  React.useEffect(() => {
     async function hideSplash() {
       await SplashScreen.hideAsync();
     }
@@ -34,8 +34,9 @@ export const Root = () => {
         <Stack.Screen name="Onboarding" component={OnboardingNavigator} />
       ) : (
         <Stack.Group>
-          <Stack.Screen name="User" component={UserNavigator} />
+          <Stack.Screen name="App" component={AppNavigator} />
           <Stack.Screen name="Account" component={AccountNavigator} />
+          {/* <Stack.Screen name="Community" component={CommunityNavigator} /> */}
         </Stack.Group>
       )}
     </Stack.Navigator>

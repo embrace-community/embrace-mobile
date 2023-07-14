@@ -10,7 +10,7 @@ import { useNumCreatedAccounts } from '@/core';
 import { Profile } from '@/db/local/profile-model';
 import { Button, Text } from '@/ui';
 
-export const UserAccountsScreen = () => {
+export const AccountsScreen = () => {
   const { navigate } = useNavigation();
   const [createAccountIcon, setCreateAccountIcon] =
     React.useState<JSX.Element | null>(null);
@@ -20,13 +20,11 @@ export const UserAccountsScreen = () => {
   const profiles = useQuery(Profile);
 
   useEffect(() => {
-    console.log('numCreatedAccounts', numCreatedAccounts);
-
     if (numCreatedAccounts < Number(maxNumberOfAccounts)) {
       const _createAccountIcon = (
         <View className="mx-auto mt-3 w-16">
           <Button
-            onPress={() => navigate('User', { screen: 'UserCreateAccount' })}
+            onPress={() => navigate('App', { screen: 'CreateAccount' })}
             className="mb-4 rounded-full p-5"
             icon={
               <AntDesign
@@ -41,6 +39,8 @@ export const UserAccountsScreen = () => {
       );
 
       setCreateAccountIcon(_createAccountIcon);
+    } else {
+      setCreateAccountIcon(null);
     }
   }, [numCreatedAccounts, navigate, maxNumberOfAccounts]);
 
@@ -50,7 +50,7 @@ export const UserAccountsScreen = () => {
         className="w-full flex-1 px-5 py-6"
         data={profiles}
         renderItem={({ item }) => <AccountCard profile={item} />}
-        keyExtractor={(item) => item._id.toHexString()}
+        keyExtractor={(item) => item._id.toString()}
         // eslint-disable-next-line react/no-unstable-nested-components
         ListEmptyComponent={() => (
           <Text className="px-8 text-center text-lg text-gray-600">
