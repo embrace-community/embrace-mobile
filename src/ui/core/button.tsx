@@ -23,7 +23,7 @@ export const buttonVariants: BVariant = {
     indicator: 'text-white h-[30px]',
   },
   primary: {
-    container: 'bg-primary-600',
+    container: 'bg-primary-600/90',
     label: '',
     indicator: 'text-white',
   },

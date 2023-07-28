@@ -14,16 +14,16 @@ import { schemas } from './db/local';
 
 loadSelectedTheme();
 SplashScreen.preventAutoHideAsync();
-
 // Only for dev
-// import { Profile } from './db/local/profile-model';
-// import { reset } from './lib/reset-store-db';
-// reset();
 
-// const realmConfig: Realm.Configuration = {
-//   schema: [Profile],
-// };
-// Realm.deleteFile(realmConfig);
+import { Profile } from './db/local/profile-model';
+import { reset } from './lib/reset-store-db';
+reset();
+
+const realmConfig: Realm.Configuration = {
+  schema: [Profile],
+};
+Realm.deleteFile(realmConfig);
 
 const App = () => {
   return (
