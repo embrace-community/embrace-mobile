@@ -12,7 +12,10 @@
     "checkJs": true,
     "jsx": "react-jsx",
     "noImplicitAny": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "lib": ["esnext"]
   },
   "exclude": [
     "node_modules",
