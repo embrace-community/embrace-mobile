@@ -4,8 +4,9 @@ import { Alert } from 'react-native';
 
 import { useIsOnboarded } from '../storage';
 import useProfile from './use-profile';
-import { useUploadBundlr } from './use-upload-bundlr';
+import { useUploadNftData } from './use-upload-nft-data';
 import { useNumCreatedAccounts, useWallet } from './use-wallet';
+
 type Props = {
   handle: string;
   displayName: string;
@@ -19,8 +20,8 @@ export const useCreateAccountForm = ({
   image,
   setLoading,
 }: Props) => {
-  // const { uploadNftData } = useUploadNftData();
-  const { uploadBundlr } = useUploadBundlr();
+  const { uploadNftData } = useUploadNftData();
+  // const { uploadBundlr } = useUploadBundlr();
   const profile = useProfile();
   const { navigate } = useNavigation();
   const maxNumberOfAccounts = Number(Env.MAX_NUMBER_OF_ACCOUNTS);
@@ -47,9 +48,7 @@ export const useCreateAccountForm = ({
     // 2 - Upload metadata & avatar to IPFS/Arweave
     const data = getFormData(image, handle, displayName);
 
-    // const result = await uploadNftData(data);
-    // NOTE: THIS FUNCTION HAS NOT BEEN CALLED YET DUE TO BUNDLR BUILD ERROR
-    const result = await uploadBundlr(data, account.privateKey);
+    const result = await uploadNftData(data);
 
     // 3 - Save data to local DB
     if (result.status === 200) {
