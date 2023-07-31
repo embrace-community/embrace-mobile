@@ -1,13 +1,15 @@
-import { Realm, useRealm } from '@realm/react';
+import { useQuery, useRealm } from '@realm/react';
 import { useCallback } from 'react';
+
+import { Profile } from '@/db/local/profile-model';
 
 const useProfile = () => {
   const realmDb = useRealm();
+  const profiles = useQuery(Profile);
 
   const save = useCallback(
     async (profile: any) => {
       const newProfile = {
-        _id: new Realm.BSON.ObjectId(),
         ...profile,
       };
 
@@ -19,7 +21,7 @@ const useProfile = () => {
     [realmDb]
   );
 
-  return { save };
+  return { save, profiles };
 };
 
 export default useProfile;

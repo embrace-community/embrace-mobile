@@ -5,7 +5,7 @@ import { CreateAccountSelectImage } from '@/components/select-image';
 import { useCreateAccountForm, useIsOnboarded, useSelectImage } from '@/core';
 import { Button, Input, SafeAreaView, View } from '@/ui';
 
-export const UserCreateAccountScreen = () => {
+export const CreateAccountScreen = () => {
   const [isOnboarded] = useIsOnboarded();
   const [handle, setHandle] = useState<string>('martinopensky');
   const [displayName, setDisplayName] = useState<string>('Martin');
@@ -27,8 +27,8 @@ export const UserCreateAccountScreen = () => {
         screen: 'GettingStarted',
       });
     } else {
-      navigate('User', {
-        screen: 'UserAccounts',
+      navigate('App', {
+        screen: 'Accounts',
       });
     }
   };

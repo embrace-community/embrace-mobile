@@ -2,11 +2,11 @@ import { Env } from '@env';
 import { useNavigation } from '@react-navigation/native';
 import { Alert } from 'react-native';
 
-import { useUploadMetadata } from '@/core/hooks/use-upload-metadata';
-
 import { useIsOnboarded } from '../storage';
 import useProfile from './use-profile';
+import { useUploadNftData } from './use-upload-nft-data';
 import { useNumCreatedAccounts, useWallet } from './use-wallet';
+
 type Props = {
   handle: string;
   displayName: string;
@@ -20,7 +20,8 @@ export const useCreateAccountForm = ({
   image,
   setLoading,
 }: Props) => {
-  const { uploadMetadata } = useUploadMetadata();
+  const { uploadNftData } = useUploadNftData();
+  // const { uploadBundlr } = useUploadBundlr();
   const profile = useProfile();
   const { navigate } = useNavigation();
   const maxNumberOfAccounts = Number(Env.MAX_NUMBER_OF_ACCOUNTS);
@@ -41,34 +42,34 @@ export const useCreateAccountForm = ({
 
     setLoading(true);
 
-    // 1 - Create Account
+    // 1 - Create Wallet Account
     const account = await createWalletAccount();
 
-    // 2 - Upload metadata & avatar to IPFS
+    // 2 - Upload metadata & avatar to IPFS/Arweave
     const data = getFormData(image, handle, displayName);
-    const result = await uploadMetadata(data);
+
+    const result = await uploadNftData(data);
 
     // 3 - Save data to local DB
     if (result.status === 200) {
-      const cids = result.json;
+      const uris = result.json;
 
-      console.log('cids', cids);
+      console.log('createdAccount', account);
+
+      console.log('uris', uris);
 
       const newProfile = {
+        _id: account.number,
         handle,
         displayName,
         accountAddress: account.address,
-        accountNumber: account.number,
         localAvatarUri: image,
-        metadataUri: cids?.metadataCid ? `ipfs://${cids.metadataCid}` : null,
-        avatarUri: cids?.avatarCid ? `ipfs://${cids.avatarCid}` : null,
+        metadataUri: uris?.metadata ? `${uris.metadata}` : null,
+        avatarUri: uris?.avatar ? `${uris.avatar}` : null,
         tokenId: null,
       };
 
       await profile.save(newProfile);
-
-      // TODO: Navigate to Account Home
-      // Need to pass the account Number
 
       setLoading(false);
 
@@ -77,7 +78,7 @@ export const useCreateAccountForm = ({
       }
 
       navigate('Account', {
-        screen: 'AccountHome',
+        screen: 'Home',
         params: {
           accountNumber: account.number,
         },
@@ -102,11 +103,15 @@ const isValidForm = (handle: string, displayName: string): boolean => {
   return true;
 };
 
-const getFormData = (image, handle, displayName) => {
+const getFormData = (
+  image: string | null,
+  handle: string,
+  displayName: string
+) => {
   const data = new FormData();
 
   if (image) {
-    data.append('image', {
+    data.append('asset', {
       uri: image,
       type: 'image/jpg',
       name: 'image.jpg',

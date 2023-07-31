@@ -1,21 +1,21 @@
 import { Env } from '@env';
 
-type CIDs = {
-  metadataCid: string;
-  avatarCid?: string;
+type URIs = {
+  metadata: string;
+  avatar?: string;
 };
 
 type UploadResponse = {
   status: number;
-  json: CIDs | null;
+  json: URIs | null;
 };
 
-export const useUploadMetadata = () => {
-  const uploadMetadata = async (data: FormData): Promise<UploadResponse> => {
+export const useUploadNftData = () => {
+  const uploadNftData = async (data: FormData): Promise<UploadResponse> => {
     try {
-      console.log('UPLOADING PROFILE', data, Env.API_ENDPOINT_IPFS + 'profile');
+      console.log('UPLOADING PROFILE', data, Env.API_ENDPOINT_IPFS + 'nft-ar');
 
-      let res = await fetch(Env.API_ENDPOINT_IPFS + 'profile', {
+      let res = await fetch(Env.API_ENDPOINT_IPFS + 'nft-ar', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -46,6 +46,6 @@ export const useUploadMetadata = () => {
   };
 
   return {
-    uploadMetadata,
+    uploadNftData,
   } as const;
 };

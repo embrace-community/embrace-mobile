@@ -4,8 +4,8 @@ import type {
 } from '@react-navigation/native';
 
 import type { AccountParamList } from './account-navigator';
+import type { AppStackParamList } from './app-navigator';
 import type { OnboardingStackParamList } from './onboarding-navigator';
-import type { UserStackParamList } from './user-navigator';
 
 type CommunityParamList = {
   Page: { name: string };
@@ -15,7 +15,7 @@ type CommunityParamList = {
 
 export type RootStackParamList = {
   Onboarding: NavigatorScreenParams<OnboardingStackParamList>;
-  User: NavigatorScreenParams<UserStackParamList>;
+  App: NavigatorScreenParams<AppStackParamList>;
   Account: NavigatorScreenParams<AccountParamList>;
   Community: NavigatorScreenParams<CommunityParamList>;
 };

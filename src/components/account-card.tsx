@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { useActiveAccount } from '@/core';
 import { Image, Text, View } from '@/ui';
 
 type Props = {
@@ -11,38 +12,40 @@ type Props = {
 
 export default function AccountCard({ profile }: Props) {
   const { navigate } = useNavigation();
+  const [_, setActiveAccount] = useActiveAccount();
 
   return (
     <TouchableOpacity
       onPress={async () => {
+        setActiveAccount(profile._id);
         navigate('Account', {
-          screen: 'AccountHome',
+          screen: 'Home',
           params: {
-            accountNumber: profile.accountNumber,
+            accountNumber: profile._id,
           },
         });
       }}
     >
-      <View className="mx-2 my-1 h-28 flex-row items-center justify-center rounded-xl border-[1px] border-slate-200 bg-white p-6">
-        <View className="mr-1 h-28 w-16 items-center justify-center rounded-full text-center text-lg">
+      <View className="h-20 flex-row items-center justify-center border-b-[1px] border-slate-200 bg-white">
+        <View className="mx-6 h-28 items-center justify-center rounded-full text-center text-lg">
           {profile.localAvatarUri ? (
             <Image
-              className="h-16 w-16 rounded-full"
+              className="h-12 w-12 rounded-full"
               source={{
                 uri: profile.localAvatarUri,
               }}
             />
           ) : (
-            <View className="h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+            <View className="h-12 w-12 items-center justify-center rounded-full bg-slate-100">
               <FontAwesome name="user" size={24} color={'grey'} />
             </View>
           )}
         </View>
         <View className="h-full flex-1 items-start justify-center rounded-lg p-1">
-          <Text variant="md" className="px-4 text-center text-gray-600">
+          <Text variant="md" className="text-center text-gray-600">
             {profile.displayName}
           </Text>
-          <Text variant="sm" className="px-4 text-center text-gray-600">
+          <Text variant="sm" className="text-center text-gray-600">
             {profile.handle}
           </Text>
         </View>

@@ -2,18 +2,19 @@ import { useMMKVNumber, useMMKVString } from 'react-native-mmkv';
 
 import { HDNodeWallet } from '@/core/ethers';
 
+import { Env } from '../env';
 import { walletStorage, walletStorageKeys } from '../storage/wallet';
 
 type WalletAccount = {
-  address: string | null;
+  address: string;
+  privateKey: string;
   number: number;
 };
 
 export const useWallet = () => {
-  const [mnemonic, setMnemonic] = useMMKVString(
-    walletStorageKeys.MNEMONIC,
-    walletStorage
-  );
+  const [mnemonic, setMnemonic] = useMnemonic();
+
+  console.log('mnemonic', mnemonic);
   const [numCreatedAccounts, setNumCreatedAccounts] = useNumCreatedAccounts();
   const { setAccountPk, setAccountAddress } = useAccount(
     numCreatedAccounts + 1
@@ -38,6 +39,8 @@ export const useWallet = () => {
       accountNum = 1;
 
       setMnemonic(wallet.mnemonic.phrase);
+
+      console.log('mnemonic', wallet.mnemonic.phrase);
     } else {
       // Create new account
 
@@ -49,6 +52,7 @@ export const useWallet = () => {
         mnemonic,
         `m/44'/60'/0'/0/${accountPath}`
       );
+      console.log('Account Path', accountPath);
       const end = performance.now();
       console.log('Create new account took ', end - start);
     }
@@ -60,6 +64,7 @@ export const useWallet = () => {
       setActiveAccount(accountNum);
       return {
         address: wallet.address,
+        privateKey: wallet.privateKey,
         number: accountNum,
       };
     } else {
@@ -73,6 +78,7 @@ export const useWallet = () => {
 };
 
 export const useAccount = (accountNumber: number) => {
+  console.log('🚀 ~ file: use-wallet.tsx useAccount', accountNumber);
   const accountPkKey = getAccountPkStorageKey(accountNumber);
   const accountAddressKey = getAccountAddressStorageKey(accountNumber);
 
@@ -94,11 +100,15 @@ export const useAccount = (accountNumber: number) => {
 };
 
 // TODO: Is this required?
-const useActiveAccount = () => {
+export const useActiveAccount = () => {
   const [activeAccount, setActiveAccount] = useMMKVNumber(
     walletStorageKeys.ACTIVE_ACCOUNT,
     walletStorage
   );
+
+  if (activeAccount === undefined) {
+    return [0, setActiveAccount] as const;
+  }
 
   return [activeAccount, setActiveAccount] as const;
 };
@@ -129,4 +139,27 @@ const getAccountAddressStorageKey = (accountNumber: number) => {
       accountNumber.toString()
     );
   } catch (error) {}
+};
+
+export const useMnemonic = () => {
+  const devMnemonic =
+    Env.APP_ENV === 'development' ? Env.DEV_MNEMONIC : undefined;
+
+  const [mnemonic, setMnemonic] = useMMKVString(
+    walletStorageKeys.MNEMONIC,
+    walletStorage
+  );
+
+  // We have not setup an account and we are not in dev mode
+  if (mnemonic === undefined && devMnemonic === undefined) {
+    return [undefined, setMnemonic] as const;
+    // We have not setup an account but we are in dev mode, so need to set the Dev Mnemonic
+  } else if (mnemonic === undefined && devMnemonic !== undefined) {
+    console.log('Setting dev mnemonic', devMnemonic);
+    setMnemonic(devMnemonic);
+    return [devMnemonic, setMnemonic] as const;
+  }
+
+  // We have setup an account and we are not in dev mode, so return the generated mnemonic
+  return [mnemonic, setMnemonic] as const;
 };
