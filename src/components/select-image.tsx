@@ -1,9 +1,9 @@
 import { AntDesign } from '@expo/vector-icons';
 import classNames from 'classnames';
 import React from 'react';
+import { Image } from 'react-native';
 
 import { TouchableOpacity, View } from '@/ui';
-import { Image } from '@/ui';
 
 export const CreateAccountSelectImage = ({ image, selectImage }) => {
   return (

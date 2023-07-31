@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { Image } from 'react-native';
 
-import { Button, Image, SafeAreaView, Text, View } from '@/ui';
+import { Button, SafeAreaView, Text, View } from '@/ui';
 
 const logo = require('../../assets/logo.png');
 
