@@ -2,9 +2,10 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useObject } from '@realm/react';
 import React from 'react';
 import { View } from 'react-native';
+import { Image } from 'react-native';
 
 import { Profile } from '@/db/local/profile-model';
-import { Image, Text } from '@/ui';
+import { Text } from '@/ui';
 
 export const AccountHeader = ({ accountNumber }: { accountNumber: number }) => {
   const profile = useObject(Profile, accountNumber);

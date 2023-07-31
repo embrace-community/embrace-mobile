@@ -1,10 +1,11 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { Image } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useActiveAccount } from '@/core';
-import { Image, Text, View } from '@/ui';
+import { Text, View } from '@/ui';
 
 type Props = {
   profile: any;
