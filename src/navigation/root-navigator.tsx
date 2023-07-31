@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as SplashScreen from 'expo-splash-screen';
 import React from 'react';
 
+import useProfile from '@/core/hooks/use-profile';
 import { useIsOnboarded } from '@/core/storage';
 
 import { AccountNavigator } from './account-navigator';
@@ -13,6 +14,9 @@ const Stack = createNativeStackNavigator();
 
 export const Root = () => {
   const [isOnboarded] = useIsOnboarded();
+  // TODO: Remove this - just for testing whether profiles have been created
+  const { profiles } = useProfile();
+  console.log('profiles', profiles);
 
   React.useEffect(() => {
     async function hideSplash() {

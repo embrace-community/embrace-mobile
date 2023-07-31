@@ -1,13 +1,12 @@
 import { Env } from '@env';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { useQuery } from '@realm/react';
 import React, { useEffect } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
 
 import AccountCard from '@/components/account-card';
 import { useNumCreatedAccounts } from '@/core';
-import { Profile } from '@/db/local/profile-model';
+import useProfile from '@/core/hooks/use-profile';
 import { Button, Text } from '@/ui';
 
 export const AccountsScreen = () => {
@@ -17,7 +16,7 @@ export const AccountsScreen = () => {
   const maxNumberOfAccounts = Number(Env.MAX_NUMBER_OF_ACCOUNTS);
   const [numCreatedAccounts] = useNumCreatedAccounts();
 
-  const profiles = useQuery(Profile);
+  const { profiles } = useProfile();
 
   useEffect(() => {
     if (numCreatedAccounts < Number(maxNumberOfAccounts)) {
@@ -47,7 +46,7 @@ export const AccountsScreen = () => {
   return (
     <SafeAreaView className=" flex flex-1 items-center justify-center gap-3 ">
       <FlatList
-        className="w-full flex-1 px-5 py-6"
+        className="w-full flex-1 "
         data={profiles}
         renderItem={({ item }) => <AccountCard profile={item} />}
         keyExtractor={(item) => item._id.toString()}
@@ -57,8 +56,9 @@ export const AccountsScreen = () => {
             No profiles found
           </Text>
         )}
-        ListFooterComponent={createAccountIcon}
+        // ListFooterComponent={createAccountIcon}
       />
+      <View className="mb-4 h-20">{createAccountIcon}</View>
     </SafeAreaView>
   );
 };

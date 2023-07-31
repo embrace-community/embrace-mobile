@@ -6,8 +6,8 @@ import { Env } from '../env';
 import { walletStorage, walletStorageKeys } from '../storage/wallet';
 
 type WalletAccount = {
-  address: string | null;
-  privateKey: string | null;
+  address: string;
+  privateKey: string;
   number: number;
 };
 

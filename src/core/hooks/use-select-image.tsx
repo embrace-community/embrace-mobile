@@ -63,8 +63,7 @@ const compressSizer = (size: number) => {
   const MB = size / Math.pow(1024, 2);
   if (Math.round(MB) === 0) return 1;
   if (Math.round(MB) === 1) return 0.8;
-  if (Math.round(MB) < 5) return 0.4;
-  if (Math.round(MB) >= 5) return 0.1;
+  if (Math.round(MB) > 1) return 0.4;
 
   return 0.5;
 };
@@ -72,16 +71,16 @@ const compressSizer = (size: number) => {
 const calculateResize = (height: number, width: number) => {
   let multiplier = 1;
 
-  if (height > 4000 || width > 4000) {
+  if (height >= 4000 || width >= 4000) {
     multiplier = 0.1;
-  } else if (height > 3000 || width > 3000) {
+  } else if (height >= 3000 || width >= 3000) {
+    multiplier = 0.15;
+  } else if (height >= 2000 || width >= 2000) {
     multiplier = 0.2;
-  } else if (height > 2000 || width > 2000) {
+  } else if (height >= 1000 || width >= 1000) {
     multiplier = 0.3;
-  } else if (height > 1000 || width > 1000) {
-    multiplier = 0.5;
   } else if (height > 500 || width > 500) {
-    multiplier = 0.8;
+    multiplier = 0.5;
   }
 
   console.log('calculateResize', { height, width, multiplier });
